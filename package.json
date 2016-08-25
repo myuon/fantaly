@@ -1,0 +1,20 @@
+{
+  "name": "_",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "watch": {
+    "test": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "hs,js"
+    }
+  },
+  "scripts": {
+    "test": "cd src; hastec Main.hs -o ../pages/js/main.js",
+    "watch": "npm-watch"
+  },
+  "author": "",
+  "license": "MIT"
+}

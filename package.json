@@ -2,19 +2,18 @@
   "name": "_",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "watch": {
-    "test": {
-      "patterns": [
-        "src"
-      ],
-      "extensions": "hs,js"
-    }
-  },
-  "scripts": {
-    "test": "cd src; hastec Main.hs -o ../pages/js/main.js",
-    "watch": "npm-watch"
-  },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/createjs": "0.0.28",
+    "browserify": "^13.1.0",
+    "createjs": "0.0.0",
+    "gulp-shell": "^0.5.2",
+    "gulp-typescript": "^2.13.6",
+    "gulp-uglify": "^2.0.0",
+    "tsify": "^1.0.3",
+    "vinyl-source-stream": "^1.1.0",
+    "vinyl-transform": "^1.0.0",
+    "webpack-stream": "^3.2.0"
+  }
 }

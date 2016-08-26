@@ -16,5 +16,4 @@ function initialize() {
   stage.update();
 }
 
-console.log("heyhey");
 (<any>window).initialize = initialize;

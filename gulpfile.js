@@ -18,13 +18,13 @@ gulp.task('webpack', function() {
 gulp.task('haste', function() {
   gulp.src("src/hs/Main.hs")
     .pipe(shell([
-      "cd src/hs; hastec '--start=$HASTE_MAIN(); initialize();' --with-js=../js/bundle.js Main.hs -o ../../pages/js/main.js"
+      "cd src/hs; hastec '--start=$HASTE_MAIN(); initialize();' --with-js=../js/bundle.js Main.hs -O2 -o ../../pages/js/main.js"
     ]));
 });
 
 gulp.task('watch', ['webpack', 'haste'], function() {
   gulp.watch('./src/hs/*.hs', ['haste']);
-  gulp.watch('./src/js/*.js', ['webpack']);
+  gulp.watch('./src/js/*.js', ['webpack', 'haste']);
 });
 
 gulp.task('default', ['watch']);

@@ -59,7 +59,6 @@
 	    stage.addChild(square);
 	    stage.update();
 	}
-	console.log("heyhey");
 	window.initialize = initialize;
 
 

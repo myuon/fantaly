@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var shell = require('gulp-shell');
 var webpack = require('webpack-stream');
+var plumber = require('gulp-plumber');
+var notify  = require('gulp-notify');
 
 gulp.task('webpack', function() {
   gulp.src(['./src/js/interface.js'])
@@ -12,11 +14,17 @@ gulp.task('webpack', function() {
         "createjs": "createjs"
       }
     }))
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>")
+    }))
     .pipe(gulp.dest('./src/js'));
 });
 
 gulp.task('haste', function() {
   gulp.src("src/hs/Main.hs")
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>")
+    }))
     .pipe(shell([
       "cd src/hs; hastec '--start=$HASTE_MAIN(); initialize();' --with-js=../js/bundle.js Main.hs -O2 -o ../../pages/js/main.js"
     ]));

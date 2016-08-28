@@ -31,7 +31,7 @@ import Lens.Family2.Unchecked
 
 import Haste
 import Haste.JSON
-import Haste.Foreign
+import Haste.Foreign hiding (toObject)
 import Haste.Serialize
 import Data.Monoid hiding (All)
 
@@ -195,6 +195,9 @@ instance (FromAny v) => FromAny ((:<) k v) where
   fromAny jany = do
     t <- fromAny jany
     return $ (Tag t :: k :< v)
+
+instance (All Serialize xs, UnionToJSON xs) => ToAny (Union xs) where
+  toAny = toObject . toJSON
 
 -- {Dict *: JSON} is a monoid
 instance Monoid JSON where

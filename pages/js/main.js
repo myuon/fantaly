@@ -56,10 +56,55 @@
 	    KeyName[KeyName["KeyRight"] = 39] = "KeyRight";
 	    KeyName[KeyName["KeyDown"] = 40] = "KeyDown";
 	})(KeyName || (KeyName = {}));
+	var BoardConst;
+	(function (BoardConst) {
+	    BoardConst.dv = 4;
+	})(BoardConst || (BoardConst = {}));
+	class Board {
+	    constructor() {
+	        this.move = [0, 0];
+	        this.state = "none";
+	        this.step = 0;
+	        this.slide = () => {
+	            this.container.x += this.move[0];
+	            this.container.y += this.move[1];
+	            this.step += 1;
+	        };
+	        this.setMove = (dir) => {
+	            if (this.state == "moving")
+	                return;
+	            if (dir == "north") {
+	                this.move = [0, BoardConst.dv];
+	            }
+	            else if (dir == "east") {
+	                this.move = [-BoardConst.dv, 0];
+	            }
+	            else if (dir == "south") {
+	                this.move = [0, -BoardConst.dv];
+	            }
+	            else if (dir == "west") {
+	                this.move = [BoardConst.dv, 0];
+	            }
+	            this.state = "moving";
+	            this.slide();
+	        };
+	        this.tick = () => {
+	            if (this.step % (box_size / BoardConst.dv) == 0) {
+	                this.state = "none";
+	                this.move = [0, 0];
+	                this.step = 0;
+	            }
+	            else {
+	                this.slide();
+	            }
+	        };
+	        this.container = new createjs.Container();
+	        this.container.x = 0;
+	        this.container.y = 0;
+	    }
+	}
 	class Game {
 	    constructor() {
-	        this.bdir = [0, 0];
-	        this.bstate = "waiting";
 	        this.haste = {};
 	        this.keys = [];
 	        this.tiling = () => {
@@ -72,37 +117,23 @@
 	                    let tileClone = tile.clone();
 	                    tileClone.x = ix * box_size;
 	                    tileClone.y = iy * box_size;
-	                    this.board.addChild(tileClone);
+	                    this.board.container.addChild(tileClone);
 	                }
 	            }
 	        };
 	        this.tick = () => {
-	            const dv = 8;
-	            if (this.bstate == "sliding") {
-	                this.board.x += this.bdir[0];
-	                this.board.y += this.bdir[1];
-	                if (this.board.x % box_size == 0 && this.board.y % box_size == 0) {
-	                    this.bstate = "waiting";
-	                    this.bdir = [0, 0];
-	                }
+	            this.board.tick();
+	            if (this.keys[KeyName.KeyLeft]) {
+	                this.board.setMove("west");
 	            }
-	            else {
-	                if (this.keys[KeyName.KeyLeft]) {
-	                    this.bdir = [dv, 0];
-	                    this.bstate = "sliding";
-	                }
-	                if (this.keys[KeyName.KeyUp]) {
-	                    this.bdir = [0, dv];
-	                    this.bstate = "sliding";
-	                }
-	                if (this.keys[KeyName.KeyRight]) {
-	                    this.bdir = [-dv, 0];
-	                    this.bstate = "sliding";
-	                }
-	                if (this.keys[KeyName.KeyDown]) {
-	                    this.bdir = [0, -dv];
-	                    this.bstate = "sliding";
-	                }
+	            if (this.keys[KeyName.KeyUp]) {
+	                this.board.setMove("north");
+	            }
+	            if (this.keys[KeyName.KeyRight]) {
+	                this.board.setMove("east");
+	            }
+	            if (this.keys[KeyName.KeyDown]) {
+	                this.board.setMove("south");
 	            }
 	            this.stage.update();
 	        };
@@ -111,11 +142,9 @@
 	            createjs.Ticker.setFPS(30);
 	        };
 	        this.stage = new createjs.Stage("canvas");
-	        this.board = new createjs.Container();
-	        this.board.x = 0;
-	        this.board.y = 0;
+	        this.board = new Board();
 	        this.tiling();
-	        this.stage.addChild(this.board);
+	        this.stage.addChild(this.board.container);
 	        this.stage.update();
 	        document.onkeydown = (event) => {
 	            this.keys[event.keyCode] = true;

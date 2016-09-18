@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>map editor</title>
+
+<style type="text/css">
+.editor { display: flex; }
+.editor .component { height: 100%; }
+canvas { border: 1px solid #aaa; }
+</style>
+
+</head>
+<body>
+
+<div class="editor">
+  <canvas id="canvas" class="component"></canvas>
+  <div id="map-image" class="component"></div>
+</div>
+
+<script src="../../src/js/createjs-2015.11.26.min.js"></script>
+<script src="../../node_modules/lodash/lodash.js"></script>
+<script src="../../node_modules/react/dist/react.min.js"></script>
+<script src="../../node_modules/react-dom/dist/react-dom.min.js"></script>
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="editor.js"></script>
+
+</body>
+</html>

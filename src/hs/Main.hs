@@ -51,7 +51,7 @@ newtype FieldJSON = FieldJSON Field deriving (Show)
 instance Serialize FieldJSON where
   toJSON (FieldJSON f) =
     let Vec w h = f^._size in
-    toJSON $ chunksOf w $ fmap (\(x,y) -> (f^._array) M.! Vec x y) [(x,y) | x <- [0..w-1], y <- [0..h-1]]
+    toJSON $ chunksOf w $ fmap (\(x,y) -> (f^._array) M.! Vec x y) $ sortBy (compare `on` snd) $ [(x,y) | x <- [0..w-1], y <- [0..h-1]]
 
     where
       chunksOf :: Int -> [a] -> [[a]]
@@ -83,9 +83,10 @@ liftJS m s = let Just x = fromString s in show <$> liftJSON m x where
 main :: IO ()
 main = do
   f <- return $ FieldJSON $ defField [
-    (Vec 0 0, 0), (Vec 1 0, 1), (Vec 2 0, 2), (Vec 3 0, 4),
-    (Vec 0 1, 3), (Vec 1 1, 4), (Vec 2 1, 5), (Vec 3 1, 1),
-    (Vec 0 2, 6), (Vec 1 2, 7), (Vec 2 2, 8), (Vec 3 2, 0)
+    (Vec 0 0, 0), (Vec 1 0, 0), (Vec 2 0, 0), (Vec 3 0, 0),
+    (Vec 0 1, 0), (Vec 1 1, 2), (Vec 2 1, 1), (Vec 3 1, 0),
+    (Vec 0 2, 0), (Vec 1 2, 1), (Vec 2 2, 1), (Vec 3 2, 0),
+    (Vec 0 3, 0), (Vec 1 3, 0), (Vec 2 3, 0), (Vec 3 3, 0)
     ]
 
   export (toJSString "tick") $ liftJS tick

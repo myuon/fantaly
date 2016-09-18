@@ -4,12 +4,12 @@
     "target": "es6",
     "noImplicitAny": true,
     "sourceMap": false,
-    "outDir": "./src/js/"
+    "outDir": "./js/"
   },
   "exclude": [
     "node_modules"
   ],
   "file": [
-    "./src/ts/interface.ts"
+    "./ts/interface.ts"
   ]
 }

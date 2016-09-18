@@ -6,11 +6,18 @@
   "license": "MIT",
   "devDependencies": {
     "@types/createjs": "0.0.28",
+    "@types/jquery": "^1.10.31",
     "@types/lodash": "^4.14.34",
+    "@types/react": "^0.14.33",
+    "@types/react-dom": "^0.14.16",
     "browserify": "^13.1.0",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-shell": "^0.5.2",
+    "jquery": "^3.1.0",
+    "lodash": "^4.15.0",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
     "webpack-stream": "^3.2.0"
   }
 }

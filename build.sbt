@@ -11,3 +11,5 @@ resolvers += "amateras-repo" at "http://amateras.sourceforge.jp/mvn/"
 libraryDependencies += "com.scalawarrior" %%% "scalajs-createjs" % "0.0.2"
 
 libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.8.1"
+
+libraryDependencies += "eu.unicredit" %%% "akkajsactor" % "0.2.4.11"

@@ -157,9 +157,11 @@ class Game {
   }
 }
 
+/*
 object Main extends js.JSApp {
   def main(): Unit = {
     val game = new Game()
     game.run()
   }
 }
+*/

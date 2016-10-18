@@ -1,4 +1,4 @@
-package fantaly.utils
+package fantaly.util
 
 import scala.scalajs.js.annotation.JSName
 import com.scalawarrior.scalajs.createjs._

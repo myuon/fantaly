@@ -26,20 +26,16 @@ trait MoveOnWorldUseCase extends UsesWorldRepository {
     Init {
       worldRepository.init()
     } #:
-    EventKeyLR {
-      _ match {
-        case CaseL =>
-          for {
-            World(pos) <- worldRepository.load()
-          } yield {
-            worldRepository.store(World(Position(pos.x - 4, pos.y)))
-          }
-        case CaseR =>
-          for {
-            World(pos) <- worldRepository.load()
-          } yield {
-            worldRepository.store(World(Position(pos.x + 4, pos.y)))
-          }
+    EventKeyLR { (d: LR) =>
+      val n = d match {
+        case CaseL => -4
+        case CaseR => 4
+      }
+
+      for {
+        World(pos) <- worldRepository.load()
+      } yield {
+        worldRepository.store(World(Position(pos.x + n, pos.y)))
       }
     } #:
     Draw { _ =>
